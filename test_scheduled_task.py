@@ -17,7 +17,8 @@ class MyTestCase(unittest.TestCase):
     def test_prioritize_above_objectively_stronger_task(self):
         scheduled_task = st.Task(priority=1)
         scheduled_task_stronger = st.Task(priority=2)
-        scheduled_task.prioritize_above(scheduled_task_stronger)
+        succeeded = scheduled_task.prioritize_above(scheduled_task_stronger)
+        self.assertFalse(succeeded)
 
 
 if __name__ == '__main__':
