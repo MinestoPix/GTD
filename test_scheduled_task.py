@@ -7,7 +7,7 @@ class MyTestCase(unittest.TestCase):
     def test_priority(self):
         priority = 0
         scheduled_task = st.Task(priority=priority)
-        self.assertEqual(scheduled_task.priority, priority)
+        self.assertEqual(scheduled_task.attributes["priority"], priority)
 
     def test_priority_weight(self):
         priority = 1
@@ -19,6 +19,12 @@ class MyTestCase(unittest.TestCase):
         scheduled_task_stronger = st.Task(priority=2)
         succeeded = scheduled_task.prioritize_above(scheduled_task_stronger)
         self.assertFalse(succeeded)
+
+    def test_prioritize_above_task(self):
+        scheduled_task = st.Task(priority=2)
+        scheduled_task_weaker = st.Task(priority=1)
+        succeeded = scheduled_task.prioritize_above(scheduled_task_weaker)
+        self.assertTrue(succeeded)
 
 
 if __name__ == '__main__':

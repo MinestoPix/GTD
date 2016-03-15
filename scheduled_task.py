@@ -5,15 +5,18 @@ class Task(object):
         "test": 1
     }
 
-    def __init__(self, priority=None):
-        self.priority = priority
+    def __init__(self, priority=0):
+        self.attributes = {"priority": priority}
 
     def weight(self):
         sum_weight = 0
-        if self.priority:
-            sum_weight += self.priority * self.modifiers["priority"]
+        for (key, value) in self.attributes.items():
+            sum_weight += value * self.modifiers[key]
         return sum_weight
 
-    def prioritize_above(self, stronger_task):
-        if stronger_task.weight() > self.weight():
-            return False
+    def prioritize_above(self, other_task):
+        stronger = False
+        for (key, value) in self.attributes.items():
+            if value > other_task.attributes[key]:
+                stronger = True
+        return stronger
